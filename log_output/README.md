@@ -2,5 +2,5 @@
 
 Deploy with:
 ```
-kubectl create deployment logoutput --image=jbbernardo7/devops-logoutput:v1
+kubectl apply -f .\manifests\deployment.yaml
 ```
