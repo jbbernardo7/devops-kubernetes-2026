@@ -2,8 +2,9 @@ FROM node:20-alpine
 
 WORKDIR /usr/src/app
 
-RUN npm install -g tsx
+COPY package*.json ./
+RUN npm install --omit=dev
 
 COPY index.ts .
 
-CMD ["tsx", "index.ts"]
+CMD ["npx", "tsx", "index.ts"]

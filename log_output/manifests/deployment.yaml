@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: logoutput
-          image: jbbernardo7/devops-logoutput:v1
+          image: jbbernardo7/devops-logoutput:v1.1
