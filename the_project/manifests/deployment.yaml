@@ -17,4 +17,4 @@ spec:
           image: jbbernardo7/the-project:v1.1
           env:
             - name: PORT
-              value: "3005"
+              value: "3000"
