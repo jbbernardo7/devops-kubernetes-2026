@@ -12,6 +12,17 @@ spec:
       labels:
         app: logoutput
     spec:
+      volumes:
+        - name: shared-logs
+          emptyDir: {}
       containers:
-        - name: logoutput
-          image: jbbernardo7/devops-logoutput:v1.1
+        - name: log-writer
+          image: jbbernardo7/log-writer:v1.0
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /usr/src/app/files
+        - name: log-reader
+          image: jbbernardo7/log-reader:v1.0
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /usr/src/app/files
