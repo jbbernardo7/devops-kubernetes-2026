@@ -13,16 +13,19 @@ spec:
         app: logoutput
     spec:
       volumes:
-        - name: shared-logs
-          emptyDir: {}
+        - name: shared-files
+          persistentVolumeClaim:
+            claimName: logoutput-claim
       containers:
         - name: log-writer
-          image: jbbernardo7/log-writer:v1.0
+          image: jbbernardo7/log-writer:v1.1
+          imagePullPolicy: Always
           volumeMounts:
-            - name: shared-logs
+            - name: shared-files
               mountPath: /usr/src/app/files
         - name: log-reader
-          image: jbbernardo7/log-reader:v1.0
+          image: jbbernardo7/log-reader:v1.1
+          imagePullPolicy: Always
           volumeMounts:
-            - name: shared-logs
+            - name: shared-files
               mountPath: /usr/src/app/files

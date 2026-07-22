@@ -3,7 +3,8 @@ import { readFile } from "fs/promises";
 import path from "path";
 
 const directory = path.join("/", "usr", "src", "app", "files");
-const filePath = path.join(directory, "logs.txt");
+const filePathLogs = path.join(directory, "logs.txt");
+const filePathPings = path.join(directory, "pings.txt");
 
 async function readTextFile(path: string): Promise<string> {
   try {
@@ -18,10 +19,11 @@ async function readTextFile(path: string): Promise<string> {
 const server = createServer(async (req, res) => {
   if (req.url === '/status') {
     try {
-      const content = await readTextFile(filePath);
+      const logoutput = await readTextFile(filePathLogs);
+	  const pingpong = "Ping / Pongs: " + await readTextFile(filePathPings);
 
       res.writeHead(200, { "Content-Type": "text/plain" });
-      res.end(content);
+      res.end(`${logoutput}\n${pingpong}`);
     } catch (err) {
       res.writeHead(500, { "Content-Type": "text/plain" });
       res.end("Failed to read file");
