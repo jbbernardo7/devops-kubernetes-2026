@@ -39,6 +39,15 @@ server.get("/random-image", async (req, reply) => {
 	return reply.type("image/jpeg").send(response.data);
 });
 
+const todos = [
+  { id: 1, text: "Todo 1" },
+  { id: 2, text: "Todo 2" },
+];
+
+server.get("/todos", async (req, reply) => {
+	return reply.send(todos);
+});
+
 server.get("/crash", (req, reply) => {
 	console.log("Crashing...");
 	reply.send("Crashing...");
