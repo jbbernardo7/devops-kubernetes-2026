@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   name: storage-pv
 spec:
-  storageClassName: logoutput-pv
+  storageClassName: my-storage-pv
   capacity:
     storage: 1Gi
   volumeMode: Filesystem
