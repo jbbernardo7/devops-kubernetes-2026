@@ -6,6 +6,7 @@ import fs from "fs/promises";
 
 const directory = path.join(process.cwd(), "files");
 const imagePath = path.join(directory, "image.jpeg");
+await fs.mkdir(directory, { recursive: true });
 
 const server = fastify();
 const host = process.env.HOST ?? "0.0.0.0";
@@ -37,15 +38,6 @@ server.get("/random-image", async (req, reply) => {
 	await fs.writeFile(imagePath, response.data);
 
 	return reply.type("image/jpeg").send(response.data);
-});
-
-const todos = [
-  { id: 1, text: "Todo 1" },
-  { id: 2, text: "Todo 2" },
-];
-
-server.get("/todos", async (req, reply) => {
-	return reply.send(todos);
 });
 
 server.get("/crash", (req, reply) => {

@@ -24,23 +24,28 @@
           />
 
           <div class="vstack gap-4">
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Add a new todo... (max 140 characters)"
-                maxlength="140"
-              />
-              <button class="btn btn-success" type="button">Add</button>
-            </div>
-
+            <form id="todo-form">
+              <div class="input-group">
+                <input
+                  id="todo-input"
+                  type="text"
+                  class="form-control"
+                  placeholder="Add a new todo... (max 140 characters)"
+                  maxlength="140"
+                  required
+                />
+                <button id="todo-submit" class="btn btn-success" type="submit">
+                  Add
+                </button>
+              </div>
+            </form>
             <div class="text-start" id="todo-list"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>	
-	<script src="/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/app.js"></script>
   </body>
 </html>
