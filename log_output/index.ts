@@ -1,15 +1,30 @@
 import { createServer } from 'http';
 import { randomUUID } from 'crypto';
+import { readFile } from "fs/promises";
 
+const information = await readFile("/etc/config/information.txt","utf8");
+const message = process.env.MESSAGE ?? "No message configured";
 const uuid = randomUUID();
-const value = () => `${new Date().toISOString()}: ${uuid}`;
+
+const getTimestamp = () => `${new Date().toISOString()}: ${uuid}`;
+const getPings = async () => {
+	const pingService = await fetch("http://pingpong-svc:2345/pings");
+	return await pingService.text();
+}
 
 const server = createServer(async (req, res) => {
   if (req.method === 'GET' && req.url === '/status') {
-	const response = await fetch("http://pingpong-svc:2345/pings");
-	const pings = "Ping / Pongs: " + await response.text();
+	const pings = await getPings();
 
-    return res.end(value() + '\n' + pings);;
+	const response = [
+		`file content: ${information}`,
+		`env variable: MESSAGE=${message}`,
+		`${getTimestamp()}`,
+		`Ping / Pongs: ${pings}`
+
+	].join("\n");
+
+    return res.end(response);;
   }
   res.writeHead(404);
   res.end('Not found');
