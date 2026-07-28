@@ -1,11 +1,4 @@
 import fastify from "fastify";
-import fastifyStatic from "@fastify/static";
-import axios from "axios";
-import path from "node:path";
-import fs from "fs/promises";
-
-const directory = path.join(process.cwd(), "files");
-const imagePath = path.join(directory, "image.jpeg");
 
 const server = fastify();
 const host = process.env.HOST ?? "0.0.0.0";
