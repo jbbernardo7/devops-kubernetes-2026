@@ -9,8 +9,10 @@ const imagePath = path.join(directory, "image.jpeg");
 await fs.mkdir(directory, { recursive: true });
 
 const server = fastify();
+
 const host = process.env.HOST ?? "0.0.0.0";
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+const picsumUrl = process.env.PICSUM_URL ?? "https://picsum.photos/1200";
 
 server.register(fastifyStatic, {
   root: path.join(process.cwd(), "public"),
@@ -34,7 +36,7 @@ server.get("/random-image", async (req, reply) => {
 
 		return reply.type("image/jpeg").send(image);
 	}
-	const response = await axios.get("https://picsum.photos/1200", {responseType: "arraybuffer"});
+	const response = await axios.get(picsumUrl, {responseType: "arraybuffer"});
 	await fs.writeFile(imagePath, response.data);
 
 	return reply.type("image/jpeg").send(response.data);
