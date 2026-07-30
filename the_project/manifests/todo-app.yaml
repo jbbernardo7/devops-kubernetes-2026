@@ -19,7 +19,7 @@ spec:
             claimName: the-project-pvc
       containers:
         - name: todo-app
-          image: jbbernardo7/todo-app:v1.1
+          image: jbbernardo7/todo-app:v1.2
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
@@ -27,3 +27,27 @@ spec:
           volumeMounts:
             - name: image-cache
               mountPath: /usr/src/app/files
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-app-svc
+  namespace: project
+spec:
+  type: ClusterIP
+  selector:
+    app: todo-app
+  ports:
+    - port: 2345
+      protocol: TCP
+      targetPort: 3000
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-app-configmap
+  namespace: project
+data:
+  HOST: "0.0.0.0"
+  PORT: "3000"
+  PICSUM_URL: "https://picsum.photos/800"

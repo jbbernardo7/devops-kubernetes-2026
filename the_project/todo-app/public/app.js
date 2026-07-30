@@ -20,13 +20,13 @@ async function loadTodos() {
 	list.innerHTML = "";
 
 	for (const todo of todos) {
-		newCard(todo.text);
+		newCard(todo.title);
 	}
 }
 
 async function postTodo() {
 	const input = document.getElementById("todo-input");
- 	const text = input.value;
+ 	const title = input.value;
 
 	const response = await fetch("/todos", {
 		method: "POST",
@@ -34,14 +34,15 @@ async function postTodo() {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			text,
+			title,
 		}),
 	});
 	const todo = await response.json();
 
 	console.log(todo);
 
-	newCard(todo.text);
+	newCard(todo.title);
+	input.value = "";
 }
 
 loadTodos();
