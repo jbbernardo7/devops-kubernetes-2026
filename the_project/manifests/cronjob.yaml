@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: wiki-cronjob
+  namespace: project
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: wiki-cronjob
+            image: jbbernardo7/wiki-cronjob:v1.0
+            imagePullPolicy: Always
+          restartPolicy: OnFailure
