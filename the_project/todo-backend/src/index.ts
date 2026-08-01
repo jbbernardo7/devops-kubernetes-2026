@@ -6,7 +6,7 @@ import { todoRoutes } from "./todos/todos.routes.js";
 async function main() {
 	await initDb();
 
-	const server = fastify();
+	const server = fastify({logger: true});
 	server.register(todoRoutes);
 
 	server.listen({ host, port }, (err) => {
