@@ -15,14 +15,8 @@ spec:
     spec:
       containers:
         - name: pingpong
-          image: jbbernardo7/pingpong:v1.3
+          image: jbbernardo7/pingpong:v1.4.1
           imagePullPolicy: Always
           envFrom:
             - secretRef:
                 name: pingpong-secret
-          readinessProbe:
-            httpGet:
-              path: /pings
-              port: 3000
-            initialDelaySeconds: 5
-            periodSeconds: 5

@@ -8,11 +8,15 @@ const uuid = randomUUID();
 
 const getTimestamp = () => `${new Date().toISOString()}: ${uuid}`;
 const getPings = async () => {
-	const pingService = await fetch("http://pingpong-svc:2345/pings");
+	const pingService = await fetch("http://pingpong-svc:80/pings");
 	return await pingService.text();
 }
 
 const server = createServer(async (req, res) => {
+  if (req.method === "GET" && req.url === "/") {
+    res.writeHead(200);
+	return res.end("Welcome!");
+  }
   if (req.method === 'GET' && req.url === '/status') {
 	const pings = await getPings();
 

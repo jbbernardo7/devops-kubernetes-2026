@@ -1,7 +1,7 @@
 import { createServer } from "http";
-import { Client } from "pg";
+import { Pool } from "pg";
 
-const pool = new Client({
+const pool = new Pool({
   host: "postgres-svc",
   port: 5432,
   user: process.env.POSTGRES_USER,
@@ -9,8 +9,27 @@ const pool = new Client({
   database: process.env.POSTGRES_DB,
 });
 
+async function waitForPostgres() {
+  while (true) {
+    try {
+      const client = await pool.connect();
+      client.release();
+      console.log("Connected to PostgreSQL");
+      return;
+    } catch (err) {
+      console.log("Waiting for PostgreSQL....");
+			if (err instanceof Error) {
+				console.log(err.message);
+			} else {
+				console.log(err);
+			}
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+  }
+}
+
 async function init() {
-  await pool.connect();
+  await waitForPostgres();
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS counter (
@@ -23,7 +42,7 @@ async function init() {
 	  WHERE NOT EXISTS (SELECT 1 FROM counter);
   `);
 
-  console.log("Table ready");
+  console.log("Table ready!");
 }
 
 const getCount = async () =>
@@ -34,6 +53,10 @@ async function incrementCount() {
 }
 
 const server = createServer(async (req, res) => {
+	if (req.method === "GET" && req.url === "/") {
+    res.writeHead(200);
+		return res.end("Welcome!");
+  }
   if (req.method === "GET" && req.url === "/pingpong") {
     await incrementCount();
     const count = await getCount();
