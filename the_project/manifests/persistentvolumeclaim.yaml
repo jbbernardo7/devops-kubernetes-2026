@@ -4,7 +4,6 @@ metadata:
   name: the-project-pvc
   namespace: project
 spec:
-  storageClassName: my-storage-pv
   accessModes:
     - ReadWriteOnce
   resources:

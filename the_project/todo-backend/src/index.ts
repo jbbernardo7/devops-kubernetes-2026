@@ -7,6 +7,11 @@ async function main() {
 	await initDb();
 
 	const server = fastify({logger: true});
+  
+  server.get('/', async (_req, reply) => {
+    return reply.code(200).send('Ok!');
+  });
+
 	server.register(todoRoutes);
 
 	server.listen({ host, port }, (err) => {

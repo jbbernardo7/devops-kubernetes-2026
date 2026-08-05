@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: todo-backend
-          image: jbbernardo7/todo-backend:v1.2
+          image: project/todo-backend
           imagePullPolicy: Always
           envFrom:
             - configMapRef:

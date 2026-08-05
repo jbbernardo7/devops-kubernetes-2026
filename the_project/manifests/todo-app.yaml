@@ -19,7 +19,7 @@ spec:
             claimName: the-project-pvc
       containers:
         - name: todo-app
-          image: jbbernardo7/todo-app:v1.2
+          image: project/todo-app
           imagePullPolicy: Always
           envFrom:
             - configMapRef:

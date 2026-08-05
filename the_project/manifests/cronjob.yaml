@@ -11,6 +11,6 @@ spec:
         spec:
           containers:
           - name: wiki-cronjob
-            image: jbbernardo7/wiki-cronjob:v1.0
+            image: project/wiki-cronjob
             imagePullPolicy: Always
           restartPolicy: OnFailure

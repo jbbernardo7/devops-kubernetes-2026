@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: project
+resources:
+  - manifests/cronjob.yaml
+  - manifests/ingress.yaml
+  - manifests/namespace.yaml
+  - manifests/persistentvolumeclaim.yaml
+  - manifests/postgres.yaml
+  - manifests/secret.yaml
+  - manifests/todo-app.yaml
+  - manifests/todo-backend.yaml
+images:
+  - name: project/todo-app
+    newName: jbbernardo7/todo-app
+    newTag: v1.2
+  - name: project/todo-backend
+    newName: jbbernardo7/todo-backend
+    newTag: v1.2.1
+  - name: project/wiki-cronjob
+    newName: jbbernardo7/wiki-cronjob
+    newTag: v1.0
+  - name: project/postgres
+    newName: postgres
+    newTag: "13"
