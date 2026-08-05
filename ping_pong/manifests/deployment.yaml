@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: pingpong
-          image: jbbernardo7/pingpong:v1.4.1
+          image: jbbernardo7/pingpong:v1.4.2
           imagePullPolicy: Always
           envFrom:
             - secretRef:
