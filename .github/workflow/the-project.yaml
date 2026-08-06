@@ -1,0 +1,81 @@
+name: Release application
+
+on:
+  push:
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: dwk-cluster
+  GKE_ZONE: europe-west2-b
+  REGISTRY: europe-west2-docker.pkg.dev
+  REPOSITORY: my-repository
+  BRANCH: ${{ github.ref_name }}
+
+jobs:
+  build-publish-deploy:
+    name: Build, Publish and Deploy
+    runs-on: ubuntu-latest
+    environment: GKE_PROJECT
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: "${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}"
+          service_account: "${{ secrets.SERVICE_ACCOUNT }}"
+
+      - name: 'Set up Cloud SDK'
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: 'Use gcloud CLI'
+        run: gcloud info
+
+      - run: gcloud --quiet auth configure-docker $REGISTRY
+
+      - name: 'Get GKE credentials'
+        uses: 'google-github-actions/get-gke-credentials@v3'
+        with:
+          cluster_name: '${{ env.GKE_CLUSTER }}'
+          project_id: '${{ env.PROJECT_ID }}'
+          location: '${{ env.GKE_ZONE }}'
+
+      - name: Build and publish todo-app
+        run: |-
+          IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/todo-app:$BRANCH-$GITHUB_SHA
+          docker build --tag $IMAGE_TAG the-project/todo-app
+          docker push $IMAGE_TAG
+          echo "TODO_APP_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Build and publish todo-backend
+        run: |-
+          IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/todo-backend:$BRANCH-$GITHUB_SHA
+          docker build --tag $IMAGE_TAG the-project/todo-backend
+          docker push $IMAGE_TAG
+          echo "TODO_BACKEND_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Build and publish wiki-cronjob
+        run: |-
+          IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/wiki-cronjob:$BRANCH-$GITHUB_SHA
+          docker build --tag $IMAGE_TAG the-project/cronjob
+          docker push $IMAGE_TAG
+          echo "WIKI_CRONJOB_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Set up Kustomize
+        uses: imranismail/setup-kustomize@v3
+
+      - name: Deploy
+        working-directory: the-project
+        run: |-
+          kustomize edit set image project/todo-app=$TODO_APP_TAG
+          kustomize edit set image project/todo-backend=$TODO_BACKEND_TAG
+          kustomize edit set image project/wiki-cronjob=$WIKI_CRONJOB_TAG
+          kustomize build . | kubectl apply -f -
+          kubectl rollout status deployment todo-app-dep -n project
+          kubectl rollout status deployment todo-backend-dep -n project
+          kubectl get services -o wide -n project
