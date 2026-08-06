@@ -48,21 +48,21 @@ jobs:
       - name: Build and publish todo-app
         run: |-
           IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/todo-app:$BRANCH-$GITHUB_SHA
-          docker build --tag $IMAGE_TAG the-project/todo-app
+          docker build --tag $IMAGE_TAG the_project/todo-app
           docker push $IMAGE_TAG
           echo "TODO_APP_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       - name: Build and publish todo-backend
         run: |-
           IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/todo-backend:$BRANCH-$GITHUB_SHA
-          docker build --tag $IMAGE_TAG the-project/todo-backend
+          docker build --tag $IMAGE_TAG the_project/todo-backend
           docker push $IMAGE_TAG
           echo "TODO_BACKEND_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       - name: Build and publish wiki-cronjob
         run: |-
           IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/wiki-cronjob:$BRANCH-$GITHUB_SHA
-          docker build --tag $IMAGE_TAG the-project/cronjob
+          docker build --tag $IMAGE_TAG the_project/cronjob
           docker push $IMAGE_TAG
           echo "WIKI_CRONJOB_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
@@ -70,7 +70,7 @@ jobs:
         uses: imranismail/setup-kustomize@v3
 
       - name: Deploy
-        working-directory: the-project
+        working-directory: the_project
         run: |-
           kustomize edit set image project/todo-app=$TODO_APP_TAG
           kustomize edit set image project/todo-backend=$TODO_BACKEND_TAG
