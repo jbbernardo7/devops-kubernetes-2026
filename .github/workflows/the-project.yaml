@@ -74,10 +74,13 @@ jobs:
       - name: Deploy
         working-directory: the_project
         run: |-
+          kubectl create namespace $BRANCH || true
+          kubectl config set-context --current --namespace=$BRANCH
+          kustomize edit set namespace $BRANCH
           kustomize edit set image project/todo-app=$TODO_APP_TAG
           kustomize edit set image project/todo-backend=$TODO_BACKEND_TAG
           kustomize edit set image project/wiki-cronjob=$WIKI_CRONJOB_TAG
           kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment todo-app-dep -n project
-          kubectl rollout status deployment todo-backend-dep -n project
-          kubectl get services -o wide -n project
+          kubectl rollout status deployment todo-app-dep
+          kubectl rollout status deployment todo-backend-dep
+          kubectl get services -o wide
