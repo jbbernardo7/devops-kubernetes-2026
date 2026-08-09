@@ -12,7 +12,7 @@ env:
   GKE_ZONE: europe-west2-b
   REGISTRY: europe-west2-docker.pkg.dev
   REPOSITORY: my-repository
-  BRANCH: ${{ github.ref_name }}
+  BRANCH: ${{ github.event.ref }}
 
 jobs:
   delete-environment:
@@ -22,11 +22,6 @@ jobs:
     environment: GKE_PROJECT
 
     steps:
-      - name: Debug 
-        run: |
-          echo "ref_name: ${{ github.ref_name }}"
-          echo "event.ref: ${{ github.event.ref }}"
-
       - uses: google-github-actions/auth@v3
         with:
           workload_identity_provider: "${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}"
@@ -41,4 +36,4 @@ jobs:
 
       - name: Delete branch namespace
         run: |-
-          kubectl delete namespace $BRANCH || true
+          kubectl delete namespace $BRANCH
