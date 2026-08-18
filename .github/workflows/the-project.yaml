@@ -64,7 +64,7 @@ jobs:
       - name: Build and publish wiki-cronjob
         run: |-
           IMAGE_TAG=$REGISTRY/$PROJECT_ID/$REPOSITORY/wiki-cronjob:$BRANCH-$GITHUB_SHA
-          docker build --tag $IMAGE_TAG the_project/cron-job
+          docker build --tag $IMAGE_TAG the_project/wiki-cronjob
           docker push $IMAGE_TAG
           echo "WIKI_CRONJOB_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
