@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-cronjob
+  namespace: project
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: pg-backup-ksa
+          containers:
+          - name: backup-cronjob
+            image: project/backup-cronjob
+            imagePullPolicy: Always
+            env:
+              - name: POSTGRES_HOST
+                value: postgres-svc
+              - name: GCS_BUCKET
+                value: dk-project-bucket
+            envFrom:
+              - secretRef:
+                  name: the-project-secret
+          restartPolicy: OnFailure
