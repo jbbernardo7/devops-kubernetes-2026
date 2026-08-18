@@ -9,8 +9,8 @@ permissions:
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: dwk-cluster
-  GKE_ZONE: europe-west2-b
-  REGISTRY: europe-west2-docker.pkg.dev
+  GKE_ZONE: europe-west1-b
+  REGISTRY: europe-west1-docker.pkg.dev
   REPOSITORY: my-repository
   BRANCH: ${{ github.event.ref }}
 
