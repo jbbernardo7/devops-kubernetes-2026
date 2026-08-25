@@ -21,3 +21,10 @@ spec:
             name: todo-backend-svc
             port:
               number: 2345
+      - path: /lucas
+        pathType: Prefix
+        backend:
+          service:
+            name: todo-backend-svc
+            port:
+              number: 2345
