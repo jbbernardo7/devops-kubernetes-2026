@@ -78,7 +78,7 @@ jobs:
         working-directory: the_project
         run: |-
           if [ "$BRANCH" = "main" ]; then
-            NAMESPACE="default"
+            NAMESPACE="project"
           else
             NAMESPACE="$BRANCH"
           fi
