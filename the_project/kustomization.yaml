@@ -12,6 +12,7 @@ resources:
   - manifests/todo-app.yaml
   - manifests/todo-backend.yaml
   - manifests/service-account.yaml
+  - manifests/resource-quota.yaml
 images:
   - name: project/todo-app
     newName: jbbernardo7/todo-app
