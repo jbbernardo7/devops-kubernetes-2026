@@ -23,6 +23,12 @@ spec:
               configMapKeyRef:
                 name: logoutput-configmap
                 key: MESSAGE
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config

@@ -39,6 +39,17 @@ const server = createServer(async (req, res) => {
 
     return res.end(response);;
   }
+  if (req.method === "GET" && req.url === "/healthz") {
+	try {
+		const pingRes = await fetch("http://pingpong-svc:80/");
+		res.writeHead(pingRes.ok ? 200 : 503);
+		res.end();
+	} catch {
+		res.writeHead(503);
+		res.end();
+	}
+	return;
+  }
   res.writeHead(404);
   res.end('Not found');
 });
