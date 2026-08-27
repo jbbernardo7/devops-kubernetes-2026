@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: log-output
-          image: jbbernardo7/log-output:v1.2
+          image: exercises/log-output
           imagePullPolicy: Always
           env:
           - name: MESSAGE
