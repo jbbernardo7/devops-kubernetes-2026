@@ -14,8 +14,8 @@ spec:
         app: logoutput
     spec:
       containers:
-        - name: log-output
-          image: exercises/log-output
+        - name: log-reader
+          image: exercises/log-reader
           imagePullPolicy: Always
           env:
           - name: MESSAGE
@@ -32,7 +32,20 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config
+            - name: log-volume
+              mountPath: /usr/src/app/files
+        - name: log-writer
+          image: exercises/log-writer
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config
+            - name: log-volume
+              mountPath: /usr/src/app/files
       volumes:
         - name: config-volume
           configMap:
             name: logoutput-configmap
+        - name: log-volume
+          persistentVolumeClaim:
+            claimName: logoutput-claim

@@ -9,8 +9,9 @@ spec:
   volumeMode: Filesystem
   accessModes:
   - ReadWriteOnce
-  local:
+  hostPath:
     path: /tmp/kube
+    type: DirectoryOrCreate
   nodeAffinity:
     required:
       nodeSelectorTerms:

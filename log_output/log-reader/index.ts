@@ -1,12 +1,19 @@
 import { createServer } from 'http';
-import { randomUUID } from 'crypto';
 import { readFile } from "fs/promises";
 
 const information = await readFile("/etc/config/information.txt","utf8");
 const message = process.env.MESSAGE ?? "No message configured";
-const uuid = randomUUID();
 
-const getTimestamp = () => `${new Date().toISOString()}: ${uuid}`;
+async function readTextFile(path: string): Promise<string> {
+  try {
+    const content = await readFile(path, "utf-8");
+    return content;
+  } catch (error) {
+    console.error("Failed to read file:", error);
+    throw error;
+  }
+}
+
 const getPings = async () => {
 	const pingService = await fetch("http://pingpong-svc:80/pings");
 	return await pingService.text();
@@ -28,11 +35,12 @@ const server = createServer(async (req, res) => {
   }
   if (req.method === 'GET' && req.url === '/status') {
 	const pings = await getPings();
+	const timestamp = await await readFile("/usr/src/app/files/logs.txt","utf8").catch(() => "");
 
 	const response = [
 		`file content: ${information}`,
 		`env variable: MESSAGE=${message}`,
-		`${getTimestamp()}`,
+		`${timestamp}`,
 		`Ping / Pongs: ${pings}`
 
 	].join("\n");
