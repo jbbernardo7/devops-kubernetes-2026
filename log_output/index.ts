@@ -14,8 +14,17 @@ const getPings = async () => {
 
 const server = createServer(async (req, res) => {
   if (req.method === "GET" && req.url === "/") {
-    res.writeHead(200);
-	return res.end("Welcome!");
+    res.writeHead(200, { "Content-Type": "text/html" });
+	return res.end(`
+		<!DOCTYPE html>
+		<html>
+		<body>
+			Welcome!<br><br>
+			<a href="/status">Status</a><br>
+			<a href="/pingpong">Ping Pong</a>
+		</body>
+		</html>
+	`);
   }
   if (req.method === 'GET' && req.url === '/status') {
 	const pings = await getPings();
