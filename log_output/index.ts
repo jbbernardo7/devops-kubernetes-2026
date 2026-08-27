@@ -44,7 +44,8 @@ const server = createServer(async (req, res) => {
 		const pingRes = await fetch("http://pingpong-svc:80/");
 		res.writeHead(pingRes.ok ? 200 : 503);
 		res.end();
-	} catch {
+	} catch (err) {
+		console.log("healthz check failed:", err);
 		res.writeHead(503);
 		res.end();
 	}

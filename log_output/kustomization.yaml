@@ -10,4 +10,4 @@ resources:
 images:
   - name: exercises/log-output
     newName: jbbernardo7/log-output
-    newTag: v1.2.4
+    newTag: v1.2.5

@@ -23,11 +23,6 @@ spec:
           env:
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: pingpong-secret
-                  key: PGPASSWORD
           ports:
             - name: postgres
               containerPort: 5432

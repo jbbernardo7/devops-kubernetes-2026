@@ -25,6 +25,6 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - pg_isready -h "postgres-svc" -p "5432"
+                - PGPASSWORD=$POSTGRES_PASSWORD pg_isready -h "postgres-svc" -p "5432" -U "$POSTGRES_USER" -d "$POSTGRES_DB"
             initialDelaySeconds: 5
             periodSeconds: 5
