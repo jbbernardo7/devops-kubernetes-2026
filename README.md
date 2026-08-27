@@ -15,7 +15,7 @@
 | [1.9](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/1.9/ping_pong) | [2.9](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/2.9/the_project) | [3.9](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/3.9) |
 | [1.10](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/1.10/log_output) | [2.10](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/2.10/the_project) | [3.10](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/3.10/the_project) |
 | [1.11](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/1.11/log_output) | | [3.11](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/3.11/the_project) |
-| [1.12](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/1.12/the_project) | |
+| [1.12](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/1.12/the_project) | | [3.12](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/3.12/the_project)
 | [1.13](https://github.com/jbbernardo7/devops-kubernetes-2026/tree/1.13/the_project) | |
 
 ---
