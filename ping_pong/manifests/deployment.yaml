@@ -20,3 +20,11 @@ spec:
           envFrom:
             - secretRef:
                 name: pingpong-secret
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - pg_isready -h "postgres-svc" -p "5432"
+            initialDelaySeconds: 5
+            periodSeconds: 5

@@ -4,9 +4,9 @@ import { Pool } from "pg";
 const pool = new Pool({
   host: "postgres-svc",
   port: 5432,
-  user: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  database: process.env.PGDATABASE,
 });
 
 async function waitForPostgres() {
