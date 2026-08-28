@@ -1,11 +1,11 @@
 name: Release application
 
 on:
-  push:
-    paths:
-      - 'the_project/**'
-    branches:
-      - '**'
+  # push:
+  #   paths:
+  #     - 'the_project/**'
+  #   branches:
+  #     - '**'
   workflow_dispatch:
 
 permissions:
