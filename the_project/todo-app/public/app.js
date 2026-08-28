@@ -54,3 +54,16 @@ form.addEventListener("submit", async (event) => {
 
 	await postTodo();
 });
+
+document.getElementById("break-btn").onclick = async () => {
+	try {
+		const response = await fetch("/crash", { method: "POST" });
+		console.log(await response.json());
+
+		bootstrap.Toast.getOrCreateInstance(
+			document.getElementById("myToast")
+		).show();
+	} catch (err) {
+		console.error(err);
+	}
+};

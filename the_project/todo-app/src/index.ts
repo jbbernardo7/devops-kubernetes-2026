@@ -14,6 +14,8 @@ const host = process.env.HOST ?? "0.0.0.0";
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 const picsumUrl = process.env.PICSUM_URL ?? "https://picsum.photos/1200";
 
+let isHealthy = true;
+
 server.register(fastifyStatic, {
   root: path.join(process.cwd(), "public"),
   index: "index.html",
@@ -42,10 +44,26 @@ server.get("/random-image", async (req, reply) => {
 	return reply.type("image/jpeg").send(response.data);
 });
 
-server.get("/crash", (req, reply) => {
+server.get("/healthz", async (_req, reply) => {
+	try {
+		await axios.get("http://todo-backend-svc:2345/healthz");
+		return reply.send({ status: true });
+	} catch {
+		return reply.code(503).send({ status: false });
+	}
+});
+
+server.get("/livez", async (_req, reply) => {
+	if (isHealthy) {
+		return reply.code(200).send({ status: true });
+	}
+	return reply.code(500).send({ status: false });
+});
+
+server.post("/crash", async (_req, reply) => {
 	console.log("Crashing...");
-	reply.send("Crashing...");
-	process.exit(1);
+	isHealthy = false;
+	return reply.send({ crashing: true });
 });
 
 server.listen({ host, port }, (err) => {

@@ -45,7 +45,22 @@
       </div>
     </div>
 
+	<button id="break-btn" type="button" class="btn btn-outline-danger position-fixed bottom-0 end-0 m-4">
+		Break the App
+	</button>
+
+	<div class="toast-container position-fixed top-0 end-0 p-3">
+		<div id="myToast" class="toast" role="alert">
+			<div class="toast-header">
+				<strong class="me-auto">System Failure</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+			</div>
+			<div class="toast-body">
+				App Failure for Todo-App!
+			</div>
+		</div>
+	</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/app.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

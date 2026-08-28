@@ -13,6 +13,10 @@ async function main() {
 		return reply.code(200).send('Ok!');
 	});
 
+	server.get('/healthz', async (_req, reply) => {
+		return reply.code(200).send('Healthy!');
+	});
+
 	server.register(todoRoutes);
 	server.register(stressRoutes);
 
