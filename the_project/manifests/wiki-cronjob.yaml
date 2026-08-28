@@ -10,7 +10,15 @@ spec:
       template:
         spec:
           containers:
-          - name: wiki-cronjob
-            image: project/wiki-cronjob
-            imagePullPolicy: Always
+            - name: wiki-cronjob
+              image: project/wiki-cronjob
+              imagePullPolicy: Always
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+                limits:
+                  cpu: 100m
+                  memory: 150Mi
           restartPolicy: OnFailure
+          
