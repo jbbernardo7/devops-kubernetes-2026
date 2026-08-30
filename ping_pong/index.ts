@@ -1,5 +1,11 @@
 import { createServer } from "http";
 import { Pool } from "pg";
+import { Worker } from "worker_threads";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const pool = new Pool({
   host: "postgres-svc",
@@ -62,8 +68,20 @@ const server = createServer(async (req, res) => {
     const count = await getCount();
     return res.end(count.toString());
   }
-  res.writeHead(404);
-  res.end("Not found");
+  if (req.method === "GET" && req.url?.startsWith("/cpu-stress")) {
+    const url = new URL(req.url, `http://${req.headers.host}`);
+	const ms = Math.min(Number(url.searchParams.get("ms")) || 1000, 30000);
+
+	const worker = new Worker(path.join(__dirname, "cpu-stresser.js"), {
+		workerData: { ms },
+	});
+	worker.on("error", (err) => console.error("Worker error:", err));
+
+	res.writeHead(202);
+	return res.end(`Stress started for ${ms}ms`);
+	}
+	res.writeHead(404);
+	res.end("Not found");
 });
 
 init()

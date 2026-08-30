@@ -8,5 +8,6 @@ COPY package*.json ./
 RUN npm install --omit=dev
 
 COPY index.ts .
+COPY cpu-stresser.js .
 
 CMD ["npx", "tsx", "index.ts"]
