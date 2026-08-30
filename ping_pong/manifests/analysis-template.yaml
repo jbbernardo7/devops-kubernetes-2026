@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: pingpong-rate
+  namespace: exercises
+spec:
+  metrics:
+  - name: pingpong-rate
+    initialDelay: 2m
+    successCondition: result < 1500
+    provider:
+      prometheus:
+        address: http://prom-prometheus-server.monitoring.svc.cluster.local:80
+        query: |
+          scalar(1000 * sum(rate(container_cpu_usage_seconds_total{namespace="exercises", container!="", container!="POD"}[5m])))

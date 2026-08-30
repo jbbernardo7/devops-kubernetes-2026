@@ -1,13 +1,26 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: pingpong-dep
   namespace: exercises
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: pingpong
+  strategy:
+    canary:
+      steps:
+      - setWeight: 25
+      - pause:
+          duration: 15s
+      - setWeight: 50
+      - analysis:
+          templates:
+          - templateName: pingpong-rate
+      - setWeight: 100
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
