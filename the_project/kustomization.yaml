@@ -16,10 +16,10 @@ resources:
 images:
   - name: project/todo-app
     newName: jbbernardo7/todo-app
-    newTag: v1.3.5
+    newTag: v1.3.9
   - name: project/todo-backend
     newName: jbbernardo7/todo-backend
-    newTag: v1.3.7
+    newTag: v1.3.10
   - name: project/wiki-cronjob
     newName: jbbernardo7/wiki-cronjob
     newTag: v1.0

@@ -29,6 +29,7 @@ export async function initDb() {
     CREATE TABLE IF NOT EXISTS todos (
       id SERIAL PRIMARY KEY,
       title VARCHAR(140) NOT NULL,
+	  is_done BOOLEAN DEFAULT FALSE,
 	  status BOOLEAN DEFAULT TRUE
     );
   `);

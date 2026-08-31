@@ -1,16 +1,38 @@
 const list = document.getElementById("todo-list");
 
-function newCard(todoText) {
+function newCard(todo) {
 	const card = document.createElement("div");
-    card.classList.add("card", "mb-2");
-
-    const body = document.createElement("div");
-    body.classList.add("card-body");
-
-    body.textContent = todoText;
-
-    card.appendChild(body);
-    list.prepend(card);
+	card.classList.add("card", "mb-2");
+ 
+	const body = document.createElement("div");
+	body.classList.add("card-body", "d-flex", "justify-content-between", "align-items-center");
+ 
+	const text = document.createElement("span");
+	text.textContent = todo.title;
+ 
+	const action = document.createElement("div");
+ 
+	if (todo.is_done) {
+		action.textContent = "Done";
+	} else {
+		const doneBtn = document.createElement("button");
+		doneBtn.classList.add("btn", "btn-primary", "btn-sm");
+		doneBtn.textContent = "Mark as Done";
+		doneBtn.onclick = () => markDone(todo.id, action);
+		action.appendChild(doneBtn);
+	}
+ 
+	body.appendChild(text);
+	body.appendChild(action);
+	card.appendChild(body);
+	list.prepend(card);
+}
+ 
+async function markDone(id, actionContainer) {
+	const response = await fetch(`/todos/${id}`, { method: "PUT" });
+	await response.json();
+ 
+	actionContainer.textContent = "Done";
 }
 
 async function loadTodos() {
@@ -20,7 +42,7 @@ async function loadTodos() {
 	list.innerHTML = "";
 
 	for (const todo of todos) {
-		newCard(todo.title);
+		newCard(todo);
 	}
 }
 
@@ -41,7 +63,7 @@ async function postTodo() {
 
 	console.log(todo);
 
-	newCard(todo.title);
+	newCard(todo);
 	input.value = "";
 }
 

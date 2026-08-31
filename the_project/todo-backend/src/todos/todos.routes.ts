@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import { addTodo, getTodos } from "./todos.repository.js";
+import { addTodo, getTodos, markTodoDone } from "./todos.repository.js";
 import type { CreateTodoBody } from "./todos.types.js";
  
 export async function todoRoutes(server: FastifyInstance) {
@@ -22,6 +22,22 @@ export async function todoRoutes(server: FastifyInstance) {
  
     const todo = await addTodo(title);
     return reply.code(201).send(todo);
+  });
+
+  server.put<{ Params: { id: string } }>("/todos/:id", async (req, reply) => {
+    const id = Number(req.params.id);
+
+    if (!Number.isInteger(id) || id <= 0) {
+      return reply.code(400).send({ error: "Invalid todo ID" });
+    }
+
+    const updatedTodo = await markTodoDone(id);
+
+    if (!updatedTodo) {
+      return reply.code(404).send({ error: "Todo not found" });
+    }
+
+    return reply.send(updatedTodo);
   });
 }
  
