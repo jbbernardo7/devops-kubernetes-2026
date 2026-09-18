@@ -8,3 +8,4 @@ export const dbConfig = {
 
 export const host = process.env.HOST ?? "0.0.0.0";
 export const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+export const nats = process.env.NATS ?? "nats://my-nats.nats.svc.cluster.local:4222";

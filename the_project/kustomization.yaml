@@ -13,13 +13,15 @@ resources:
   - manifests/todo-backend.yaml
   #- manifests/service-account.yaml
   - manifests/resource-quota.yaml
+  - manifests/secret-telegram.yaml
+  - manifests/broadcaster.yaml
 images:
   - name: project/todo-app
     newName: jbbernardo7/todo-app
     newTag: v1.3.9
   - name: project/todo-backend
     newName: jbbernardo7/todo-backend
-    newTag: v1.3.10
+    newTag: v1.3.11
   - name: project/wiki-cronjob
     newName: jbbernardo7/wiki-cronjob
     newTag: v1.0
@@ -29,3 +31,6 @@ images:
   - name: project/postgres
     newName: postgres
     newTag: "13"
+  - name: project/broadcaster
+    newName: jbbernardo7/broadcaster
+    newTag: v1.1.1

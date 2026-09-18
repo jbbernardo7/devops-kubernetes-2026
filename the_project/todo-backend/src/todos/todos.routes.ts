@@ -1,13 +1,16 @@
 import type { FastifyInstance } from "fastify";
-import { addTodo, getTodos, markTodoDone } from "./todos.repository.js";
+import { getTodos } from "./todos.repository.js";
 import type { CreateTodoBody } from "./todos.types.js";
+import { completeTodo, createTodo } from "./todos.service.js";
  
 export async function todoRoutes(server: FastifyInstance) {
+	//	GET
   server.get("/todos", async (_req, reply) => {
     const todos = await getTodos();
     return reply.send(todos);
   });
  
+  //	CREATE
   server.post<{ Body: CreateTodoBody }>("/todos", async (req, reply) => {
     const { title } = req.body ?? {};
  
@@ -15,15 +18,16 @@ export async function todoRoutes(server: FastifyInstance) {
 	  	req.log.warn({ body: req.body }, "rejected: title missing or empty");
       	return reply.code(400).send({ error: "`title` is required and must be a non-empty string" });
     }
-	if (title.length > 140) {
-		req.log.warn({ titleLength: title.length }, "rejected: title too long");
-		return reply.code(400).send({ error: "`title` must be 140 characters or less" });
-	}
+		if (title.length > 140) {
+			req.log.warn({ titleLength: title.length }, "rejected: title too long");
+			return reply.code(400).send({ error: "`title` must be 140 characters or less" });
+		}
  
-    const todo = await addTodo(title);
+    const todo = await createTodo(title);
     return reply.code(201).send(todo);
   });
 
+	//	PUT (COMPLETED)
   server.put<{ Params: { id: string } }>("/todos/:id", async (req, reply) => {
     const id = Number(req.params.id);
 
@@ -31,7 +35,7 @@ export async function todoRoutes(server: FastifyInstance) {
       return reply.code(400).send({ error: "Invalid todo ID" });
     }
 
-    const updatedTodo = await markTodoDone(id);
+    const updatedTodo = await completeTodo(id);
 
     if (!updatedTodo) {
       return reply.code(404).send({ error: "Todo not found" });

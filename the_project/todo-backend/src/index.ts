@@ -1,11 +1,13 @@
 import fastify from "fastify";
-import { host, port } from "./config.js";
+import { host, port, nats } from "./config.js";
 import { initDb } from "./db/client.js";
 import { todoRoutes } from "./todos/todos.routes.js";
 import { stressRoutes } from "./stress/stress.routes.js";
+import { initNats } from "./nats/client.js";
 
 async function main() {
 	await initDb();
+	await initNats(nats);
 
 	const server = fastify({logger: true});
   

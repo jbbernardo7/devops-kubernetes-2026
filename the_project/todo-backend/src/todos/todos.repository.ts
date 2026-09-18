@@ -27,7 +27,7 @@ export async function markTodoDone(id: number): Promise<Todo | null> {
     UPDATE todos
     SET is_done = TRUE
     WHERE id = $1
-    RETURNING id, title, is_done;
+    RETURNING id, title, is_done, status;
     `,
     [id]
   );
