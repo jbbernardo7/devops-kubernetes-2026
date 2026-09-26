@@ -77,7 +77,7 @@ jobs:
       - name: Update changed images
         run: |
           for svc in $(echo '${{ steps.changes.outputs.changes }}' | jq -r '.[]'); do
-            kustomize edit set image exercises/$svc=jbbernardo7/$svc:$GITHUB_SHA
+            kustomize edit set image project/$svc=jbbernardo7/$svc:$GITHUB_SHA
           done
 
       - name: commit kustomization.yaml to GitHub
