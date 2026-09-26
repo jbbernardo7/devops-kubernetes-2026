@@ -30,7 +30,7 @@ images:
   newTag: "13"
 - name: project/todo-app
   newName: jbbernardo7/todo-app
-  newTag: 6f08b9910c317168d71850db118dad305d715b60
+  newTag: 859f4174475ac97f5904361e57f7dbab300e8d98
 - name: project/todo-backend
   newName: jbbernardo7/todo-backend
   newTag: v1.3.11
