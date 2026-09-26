@@ -2,16 +2,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: exercises
 resources:
-  - manifests/namespace.yaml
-  - manifests/configmap.yaml
-  - manifests/deployment.yaml
-  - manifests/httproute.yaml
-  - manifests/service.yaml
-  - manifests/pvc.yaml
+- manifests/namespace.yaml
+- manifests/configmap.yaml
+- manifests/deployment.yaml
+- manifests/httproute.yaml
+- manifests/service.yaml
+- manifests/pvc.yaml
 images:
-  - name: exercises/log-reader
-    newName: jbbernardo7/log-reader
-    newTag: v2.0
-  - name: exercises/log-writer
-    newName: jbbernardo7/log-writer
-    newTag: v2.0
+- name: exercises/log-reader
+  newName: jbbernardo7/log-reader
+  newTag: 7dde8b2c7d276fd7a72a1959f7833dce889f662c
+- name: exercises/log-writer
+  newName: jbbernardo7/log-writer
+  newTag: v2.0
