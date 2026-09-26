@@ -13,7 +13,7 @@ resources:
   - manifests/todo-backend.yaml
   #- manifests/service-account.yaml
   - manifests/resource-quota.yaml
-  - manifests/secret-telegram.yaml
+  #- manifests/secret-telegram.yaml
   - manifests/broadcaster.yaml
 images:
   - name: project/todo-app
