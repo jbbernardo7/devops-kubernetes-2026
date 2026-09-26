@@ -26,7 +26,7 @@ const server = createServer(async (req, res) => {
 		<!DOCTYPE html>
 		<html>
 		<body>
-			Welcome!<br><br>
+			Welcome ArgoCD!<br><br>
 			<a href="/status">Status</a><br>
 			<a href="/pingpong">Ping Pong</a>
 		</body>
