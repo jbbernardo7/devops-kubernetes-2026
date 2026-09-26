@@ -11,7 +11,7 @@ resources:
 images:
 - name: exercises/log-reader
   newName: jbbernardo7/log-reader
-  newTag: a38181c56a57dbfca76b3513d0b0ef1e2d25d4e6
+  newTag: e3d3fb6e80371d72231e397212fa73cfd489ada1
 - name: exercises/log-writer
   newName: jbbernardo7/log-writer
   newTag: v2.0
