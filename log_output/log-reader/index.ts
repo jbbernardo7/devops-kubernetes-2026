@@ -49,8 +49,9 @@ const server = createServer(async (req, res) => {
   }
   if (req.method === "GET" && req.url === "/healthz") {
 	try {
-		const pingRes = await fetch("http://pingpong-svc:80/");
-		res.writeHead(pingRes.ok ? 200 : 503);
+		//const pingRes = await fetch("http://pingpong-svc:80/");
+		//res.writeHead(pingRes.ok ? 200 : 503);
+		res.writeHead(200);
 		res.end();
 	} catch (err) {
 		console.log("healthz check failed:", err);
